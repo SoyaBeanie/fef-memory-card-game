@@ -1,4 +1,7 @@
 const cards = document.querySelectorAll(".card");
+const reset = document.getElementById('reset');
+const tally = document.getElementById('tally');
+const complete = document.getElementById('complete');
 let matchedPairs = 0;
 let cardOne, cardTwo;
 let disableDeck = false;
@@ -8,7 +11,8 @@ function shuffleCards() {
     matchedPairs = 0; // reset matchedPairs variable to 0
     disableDeck = false; // reset disableDeck boolean to false
     cardOne = cardTwo = ""; // reset cardOne and cardTwo variables to empty string
-
+    tally.innerHTML = ""
+    complete.innerHTML = ""
     let arr = [1, 2, 3, 4, 5, 6, 7, 8, 1, 2, 3, 4, 5, 6, 7, 8]; // create an array of the image numbers, 1-8, twice
     arr.sort(() => Math.random() > 0.5 ? 1 : -1); // randomly sort the array
     
@@ -46,9 +50,10 @@ function flipCard(clickEvent) {
 function matchCards(img1, img2) {
     if (img1 === img2) { // this code will run if the card images match
         matchedPairs++; // if the card images match, we can increment the global `matchedPairs` variable by 1 match
-
+        tally.innerHTML=`<span>${matchedPairs} pair(s) matched!</span>`
         if (matchedPairs == 8) { // if your number of matches is 8, you've made all the matches! Game Won!
             console.log('YOU WIN!');
+            complete.innerHTML=`<span>YOU WIN!!</span>`
             return; // for now, lets call this game over, end this function and do nothing else.
         }
         // everything below will execute if the game has not yet been won...
@@ -74,6 +79,5 @@ function matchCards(img1, img2) {
 
 }
 
-
-
 shuffleCards();
+reset.addEventListener('click', shuffleCards);
